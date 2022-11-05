@@ -51,7 +51,7 @@ router.post('/signup', (req, res, next) => {
     }
 });
 
-router.post('/login', passport.authenticate('local'), (req, res, next) => {
+router.post('/login', passport.authenticate('local', {session: false}), (req, res, next) => {
     const token = getToken({_id: req.user._id});
     const refreshToken = getRefreshToken({_id: req.user._id});
     User.findById(req.user._id).then(user => {
