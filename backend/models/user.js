@@ -23,9 +23,9 @@ const User = new Schema({
         type: String,
         default: 'local'
     },
-    points: {
-        type: Number,
-        default: 50
+    roles: {
+        type: Array,
+        default: []
     },
     refreshToken: {
         type: [Session]

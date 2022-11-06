@@ -12,6 +12,7 @@ require('./strategies/LocalStrategy');
 require('./authenticate');
 
 const userRouter = require('./routes/userRoutes');
+const sentenceRouter = require('./routes/sentenceRoutes');
 
 const app = express();
 
@@ -38,11 +39,15 @@ app.use(cors(corsOptions));
 
 app.use(passport.initialize());
 
-app.use('/users', userRouter);
+app.use('/user', userRouter); // Maybe switch back to /users???
+app.use('/sentence', sentenceRouter);
 
 app.get('/', (req, res) => {
     res.send({status: 'success'})
 });
+
+
+/* ----- API Calls ----- */
 
 // Start the server in port 8081
 const server = app.listen(process.env.PORT || 8081, () => {

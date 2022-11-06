@@ -10,7 +10,6 @@ const {
     getRefreshToken,
     verifyUser
 } = require('../authenticate');
-const user = require('../models/user');
 
 router.get('/me', verifyUser, (req, res, next) => res.send(req.user));
 
