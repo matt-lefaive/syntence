@@ -16,7 +16,7 @@ const Login = () => {
 
         const genericErrorMessage = 'Something went wrong! Please try again later.';
 
-        fetch(process.env.REACT_APP_API_ENDPOINT + 'users/login', {
+        fetch(process.env.REACT_APP_API_ENDPOINT + 'user/login', {
             method: 'POST',
             credentials: 'include',
             headers: {'Content-Type': 'application/json'},
@@ -70,7 +70,7 @@ const Login = () => {
                     fill 
                     type='submit' 
                     text={`${isSubmitting ? 'Signing In' : 'Sign In'}`}
-                    disabled={isSubmitting}
+                    disabled={isSubmitting ? true : undefined}
                 />
             </form>
         </>

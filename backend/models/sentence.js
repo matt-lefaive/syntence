@@ -7,8 +7,14 @@
  *          fre: "J'aime le chat"
  *      },
  *      translations: {
- *          oji: [[id], [id], [id]]
- *      }
+ *          oji: 'Pooshiish'
+ *      },
+ *      words: {
+ *          oji: [<word1ID>, <word2ID>, ...]
+ *      },
+ *      recordings: {
+ *          oji: <path>
+ *      } 
  * }
  */
 
@@ -18,11 +24,19 @@ const Schema = mongoose.Schema;
 const Sentence = new Schema({
     text: {
         type: Object,
-        default: []
+        default: {}
     },
     translations: {
         type: Object,
-        default: []
+        default: {}
+    },
+    words: {
+        type: Object,
+        default: {}
+    },
+    recordings: {
+        type: Object,
+        default: {}
     }
 })
 

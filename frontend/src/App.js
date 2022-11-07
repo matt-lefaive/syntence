@@ -5,13 +5,14 @@ import Loader from './components/loader';
 import Login from './components/login';
 import Register from './components/register';
 import Welcome from './components/welcome';
+import Workspace from './components/workspace';
 
 const App = () => {
   const [currentTab, setCurrentTab] = useState('login');
   const [userContext, setUserContext] = useContext(UserContext);
 
   const verifyUser = useCallback(() => {
-    fetch(process.env.REACT_APP_API_ENDPOINT + 'users/refreshToken', {
+    fetch(process.env.REACT_APP_API_ENDPOINT + 'user/refreshToken', {
       method: 'POST',
       credentials: 'include',
       headers: {'Content-Type': 'application/json'}
@@ -61,7 +62,7 @@ const App = () => {
       </Tabs>
     </Card>
   ) : userContext.token ? (
-    <Welcome />
+    <Workspace />
   ) : (
     <Loader />
   );

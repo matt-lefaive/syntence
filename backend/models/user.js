@@ -23,9 +23,9 @@ const User = new Schema({
         type: String,
         default: 'local'
     },
-    roles: {
-        type: Array,
-        default: []
+    role: {
+        type: String,
+        default: 'translator'
     },
     refreshToken: {
         type: [Session]

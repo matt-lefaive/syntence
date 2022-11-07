@@ -3,6 +3,8 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
+const fileUpload = require('express-fileupload');
+const _ = require('lodash');
 
 require('dotenv').config();
 require('./utils/connectdb');
@@ -13,8 +15,14 @@ require('./authenticate');
 
 const userRouter = require('./routes/userRoutes');
 const sentenceRouter = require('./routes/sentenceRoutes');
+const wordRouter = require('./routes/wordRoutes');
 
 const app = express();
+
+// Enable file uploads
+app.use(fileUpload({
+    createParentPath: true
+}));
 
 app.use(bodyParser.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
@@ -39,8 +47,9 @@ app.use(cors(corsOptions));
 
 app.use(passport.initialize());
 
-app.use('/user', userRouter); // Maybe switch back to /users???
+app.use('/user', userRouter);
 app.use('/sentence', sentenceRouter);
+app.use('/word', wordRouter);
 
 app.get('/', (req, res) => {
     res.send({status: 'success'})

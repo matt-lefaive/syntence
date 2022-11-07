@@ -210,3 +210,5 @@ backend/.dynamodb/
 
 # TernJS port file
 backend/.tern-port
+
+backend/uploads

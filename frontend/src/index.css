@@ -24,3 +24,11 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+.workspace-card {
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0px 0px 4px lightgray;
+  margin-bottom: 10px;
+}

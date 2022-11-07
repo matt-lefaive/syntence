@@ -7,7 +7,7 @@ const Welcome = () => {
     const [userContext, setUserContext] = useContext(UserContext);
 
     const fetchUserDetails = useCallback(() => {
-        fetch(process.env.REACT_APP_API_ENDPOINT + 'users/me', {
+        fetch(process.env.REACT_APP_API_ENDPOINT + 'user/me', {
             method: 'GET',
             credentials: 'include',
             // Pass authentication token as bearer token in header
@@ -44,7 +44,7 @@ const Welcome = () => {
     }, [userContext.details, fetchUserDetails])
 
     const logoutHandler = () => {
-        fetch(process.env.REACT_APP_API_ENDPOINT + 'users/logout', {
+        fetch(process.env.REACT_APP_API_ENDPOINT + 'user/logout', {
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
