@@ -61,6 +61,14 @@ const localization = lang => {
         UPDATED_TRANSLATION: {
             eng: "Updated translation",
             fre: "Traduction actualisée"
+        },
+        TRANSLATOR: {
+            eng: "Translator",
+            fre: "Traducteur·rice"
+        },
+        GLOSSER: {
+            eng: "Glosser",
+            fre: "Noteur·se"
         }
     }
 
