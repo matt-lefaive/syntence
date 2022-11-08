@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, FormGroup, InputGroup, Callout } from '@blueprintjs/core';
 
-const TranslatorCard = ({ sentence, isTranslated, lang, sentenceId, sentenceObject, updateSentence }) => {
+import localization from '../Localization/localization';
+
+const TranslatorCard = ({ sentence, isTranslated, lang, sentenceId, sentenceObject, updateSentence, displayLang }) => {
     const [translation, setTranslation] = useState(isTranslated ? sentenceObject.translations[lang] : '');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [filename, setFilename] = useState('Choose recording...');
@@ -13,6 +15,12 @@ const TranslatorCard = ({ sentence, isTranslated, lang, sentenceId, sentenceObje
         : ''
     );
     const [error, setError] = useState('');
+
+    const localized = localization(displayLang);
+
+    useEffect(() => {
+        setFilename(localized.CHOOSE_RECORDING);
+    }, [localized.CHOOSE_RECORDING])
 
     const submitNewTranslationHandler = e => {
         e.preventDefault();
@@ -113,7 +121,7 @@ const TranslatorCard = ({ sentence, isTranslated, lang, sentenceId, sentenceObje
                     <FormGroup label={sentence} labelFor='translation'>
                         <InputGroup 
                             id='translation'
-                            placeholder='translation'
+                            placeholder={localized.TRANSLATION}
                             type='text'
                             value={translation}
                             onChange={e => setTranslation(e.target.value)}
@@ -132,7 +140,7 @@ const TranslatorCard = ({ sentence, isTranslated, lang, sentenceId, sentenceObje
                         intent='primary'
                         fill
                         type='submit'
-                        text={isSubmitting ? 'Submitting' : 'Submit'}
+                        text={isSubmitting ? localized.SUBMITTING : localized.SUBMIT}
                         disabled={isSubmitting ? true : undefined}
                     />
                 </form>
@@ -146,7 +154,7 @@ const TranslatorCard = ({ sentence, isTranslated, lang, sentenceId, sentenceObje
                     <FormGroup label={sentence} labelFor='translation'>
                         <InputGroup 
                             id='translation'
-                            placeholder='Updated translation'
+                            placeholder={localized.UPDATED_TRANSLATION}
                             type='text'
                             value={translation}
                             onChange={e => setTranslation(e.target.value)}
@@ -165,7 +173,7 @@ const TranslatorCard = ({ sentence, isTranslated, lang, sentenceId, sentenceObje
                         intent='warning'
                         fill
                         type='submit'
-                        text={isSubmitting ? 'Updating' : 'Update'}
+                        text={isSubmitting ? localized.UPDATING : localized.UPDATE}
                         disabled={isSubmitting ? true : undefined}
                     />
                 </form>

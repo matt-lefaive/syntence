@@ -4,12 +4,20 @@ import {UserContext} from '../context/UserContext';
 import TranslatorCard from './translator-card';
 import { HTMLSelect, Checkbox } from '@blueprintjs/core';
 
+import localization from '../Localization/localization';
+
 const Workspace = ({ role }) => {
     const [displayLang, setDisplayLang] = useState('eng');
     const [targetLang, setTargetLang] = useState('oji');
     const [sentences, setSentences] = useState([]);
     const [showTranslatedSentences, setShowTranslatedSentences] = useState(false);
+    const [localized, setLocalized] = useState(localization(displayLang));
+    
     const [userContext, setUserContext] = useContext(UserContext);
+
+    useEffect(() => {
+        setLocalized(localization(displayLang))
+    }, [displayLang, setLocalized]);
 
     const fetchUserDetails = useCallback(() => {
         fetch(process.env.REACT_APP_API_ENDPOINT + 'user/me', {
@@ -72,29 +80,28 @@ const Workspace = ({ role }) => {
 
     return (
         <div className='workspace'>
-            {JSON.stringify(userContext)}
             <div id='settings-card' className='workspace-card'>
-                <p><strong>Settings</strong></p>
+                <p><strong>{localized.SETTINGS}</strong></p>
                 <div style={{display:'flex'}}>
                     <div style={{flex: 1}}>
-                        <p style={{marginBottom: '5px'}}>Display Language:</p>
+                        <p style={{marginBottom: '5px'}}>{localized.DISPLAY_LANGUAGE}</p>
                         <HTMLSelect onChange={e => setDisplayLang(e.target.value)}>
-                            <option value='eng'>English</option>
-                            <option value='fre'>French</option>
+                            <option value='eng'>{localized.ENGLISH}</option>
+                            <option value='fre'>{localized.FRENCH}</option>
                         </HTMLSelect>
                     </div>
                     <div style={{flex: 1}}>
-                        <p style={{marginBottom: '5px'}}>Target Language:</p>
+                        <p style={{marginBottom: '5px'}}>{localized.TARGET_LANGUAGE}</p>
                         <HTMLSelect onChange={e => setTargetLang(e.target.value)}>
-                            <option value='oji'>Ojibwe</option>
+                            <option value='oji'>{localized.OJIBWE}</option>
                         </HTMLSelect>
                     </div>
                 </div>
                 <div style={{marginTop:'15px'}}>
-                    <p>Additional Options</p>
+                    <p>{localized.ADDITIONAL_OPTIONS}</p>
                     <Checkbox 
                         checked={showTranslatedSentences} 
-                        label='Show translated sentences'
+                        label={localized.SHOW_TRANSLATED_SENTENCES}
                         onChange={e => setShowTranslatedSentences(!showTranslatedSentences)}
                     />
                 </div>
@@ -110,7 +117,8 @@ const Workspace = ({ role }) => {
                         sentenceId={s._id}
                         lang={targetLang}
                         sentenceObject={s}
-                        updateSentence={updateSentence}   
+                        updateSentence={updateSentence}
+                        displayLang={displayLang}   
                     />
                     )
                 } else {
