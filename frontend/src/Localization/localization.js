@@ -2,17 +2,17 @@ const localization = lang => {
     if (!['eng', 'fre'].includes(lang)) lang = 'eng';
     
     const text = {
-        SETTINGS: {
-            eng: "Settings:",
-            fre: "Paramètres:"
+        ADDITIONAL_OPTIONS: {
+            eng: "Additional Options:",
+            fre: "Paramètres additionnels:"
+        },
+        CHOOSE_RECORDING: {
+            eng: "Choose recording...",
+            fre: "Choisir enregistrement..."
         },
         DISPLAY_LANGUAGE: {
             eng: "Display Language:",
             fre: "Langue d'affichage:"
-        },
-        TARGET_LANGUAGE: {
-            eng: "Target Language:",
-            fre: "Langue cible:"
         },
         ENGLISH: {
             eng: "English",
@@ -22,21 +22,29 @@ const localization = lang => {
             eng: "French",
             fre: "Français"
         },
+        GLOSS: {
+            eng: "Gloss",
+            fre: "Note"
+        },
+        GLOSSER: {
+            eng: "Glosser",
+            fre: "Noteur·se"
+        },
         OJIBWE: {
             eng: "Ojibwe",
             fre: "Ojibwé"
         },
-        ADDITIONAL_OPTIONS: {
-            eng: "Additional Options:",
-            fre: "Paramètres additionnels:"
+        SETTINGS: {
+            eng: "Settings:",
+            fre: "Paramètres:"
         },
         SHOW_TRANSLATED_SENTENCES: {
             eng: "Show translated sentences",
             fre: "Montrer phrases traduites"
         },
-        CHOOSE_RECORDING: {
-            eng: "Choose recording...",
-            fre: "Choisir enregistrement..."
+        SOURCE: {
+            eng: "Source",
+            fre: "Source",
         },
         SUBMIT: {
             eng: "Submit",
@@ -46,30 +54,30 @@ const localization = lang => {
             eng: "Submitting",
             fre: "En soumettant"
         },
-        UPDATE: {
-            eng: "Update",
-            fre: "Actualiser"
-        },
-        UPDATING: {
-            eng: "Updating",
-            fre: "En actualisant"
+        TARGET_LANGUAGE: {
+            eng: "Target Language:",
+            fre: "Langue cible:"
         },
         TRANSLATION: {
             eng: "Translation",
             fre: "Traduction"
         },
-        UPDATED_TRANSLATION: {
-            eng: "Updated translation",
-            fre: "Traduction actualisée"
-        },
         TRANSLATOR: {
             eng: "Translator",
             fre: "Traducteur·rice"
         },
-        GLOSSER: {
-            eng: "Glosser",
-            fre: "Noteur·se"
-        }
+        UPDATE: {
+            eng: "Update",
+            fre: "Actualiser"
+        },
+        UPDATED_TRANSLATION: {
+            eng: "Updated translation",
+            fre: "Traduction actualisée"
+        },
+        UPDATING: {
+            eng: "Updating",
+            fre: "En actualisant"
+        },
     }
 
     Object.keys(text).forEach(translation => text[translation] = text[translation][lang])

@@ -54,7 +54,7 @@ const App = () => {
   }, [syncLogout]);
 
   return userContext.token === null ? (
-    <Card elevation='1'>
+    <Card elevation='1' className='auth-card'>
       <Tabs id='Tabs' onChange={setCurrentTab} selectedTabId={currentTab}>
         <Tab id='login' title='Login' panel={<Login />} />
         <Tab id='register' title='Register' panel={<Register />} />

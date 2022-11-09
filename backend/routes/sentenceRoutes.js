@@ -22,6 +22,19 @@ router.get('/:id', (req, res, next) => {
 })
 
 /**
+ * Update sentence based on id
+ */
+router.post('/update/:lang/:id', (req, res, next) => {
+    const id = req.params.id;
+    const lang = req.params.lang;
+    const update = {[`words.${lang}`]: req.body.newWordIds}
+    
+    Sentence.findByIdAndUpdate(id, update).exec((err, sentence) => {
+        res.send(sentence);
+    })
+})
+
+/**
  * Submit new translation sentence
  */
 router.post('/translation/:id/:lang',  (req, res, next) => {

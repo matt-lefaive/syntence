@@ -19,7 +19,11 @@ router.get('/', (req, res, next) => {
 router.get('/:id', (req, res, next) => {
     const id = req.params.id;
     Word.findById(id).exec((err, word) => {
-        res.send(word);
+        if (err) {
+            res.send({});
+        } else {
+            res.send(word);
+        }
     });
 });
 
@@ -66,6 +70,34 @@ router.post('/sentence/lang/:lang', async (req, res, next) => {
     }
     
     formIdArray();
+});
+
+// Submit a new word
+router.post('/new', (req, res, next) => {
+    const newWord = new Word(req.body.newWord);
+    newWord.save().then(word => {
+        res.send(word);
+    }).catch(err => {
+        res.send(err)
+    })
+})
+
+// Submit a whole object of glosses to DB
+// TODO: Actually write this well
+router.post('/gloss/multi', (req, res, next) => {
+    const ids = Object.keys(req.body.glossedWords)
+    const glosses = ids.map(id => req.body.glossedWords[id]);
+
+    // Update each word object with it's gloss
+    for (let i = 0; i < ids.length; i++) {
+        const update = {gloss: glosses[i]}
+        Word.findByIdAndUpdate(ids[i], update).exec((err, word) => {
+
+        })
+    }
+
+    // Not the correct approach (doesn't wait for all to submit)
+    res.send({});
 })
 
 module.exports = router;

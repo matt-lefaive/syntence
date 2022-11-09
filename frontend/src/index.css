@@ -3,12 +3,16 @@
 @import '~@blueprintjs/icons/lib/css/blueprint-icons.css';
 
 body {
-  margin: 0 auto;
-  max-width: 400px;
+  margin: 1em auto;
+  max-width: 600px;
 }
 
 .auth-form {
   margin-top: 10px;
+}
+
+.auth-card {
+  max-width: 400px;
 }
 
 .loader {
@@ -31,4 +35,49 @@ body {
   padding: 10px;
   box-shadow: 0px 0px 4px lightgray;
   margin-bottom: 10px;
+  width: 600px;
+}
+
+/* ----- Glosser Card Styles ----- */
+input[type="text"].grow,
+span.grow {
+  border: 2px solid #666;
+}
+
+input[type="text"].grow {
+  width: 2em;
+  padding: 0.5em 1em;
+  color: #555;
+  outline: 0;
+}
+
+input[type="text"].grow:focus {
+  border-color: #ff7996;
+}
+
+span.grow {
+  position: absolute;
+  left: -9999px;
+  display: inline-block;
+  min-width: 2em;
+}
+
+.gloss-unlinker {
+  border: 1px solid lightgray;
+  color: lightgray;
+  border-radius: 5px;
+}
+
+.gloss-unlinker:hover {
+  border: 1px solid lightskyblue;
+  color: lightskyblue;
+  cursor: pointer;
+}
+
+.implied-gloss {
+  color: grey;
+}
+
+.direct-gloss {
+  color: black;
 }

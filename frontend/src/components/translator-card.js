@@ -26,8 +26,6 @@ const TranslatorCard = ({ sentence, isTranslated, lang, sentenceId, sentenceObje
         e.preventDefault();
         setIsSubmitting(true);
         setError('');
-        
-        console.log(sentenceObject);
 
         const genericErrorMessage = 'Something went wrong! Please try again later';
 

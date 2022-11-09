@@ -119,7 +119,7 @@ const Workspace = () => {
                                     key={r}
                                     value={r}
                                 >
-                                {localized[r.toUpperCase()]}
+                                    {localized[r.toUpperCase()]}
                                 </option>
                             );
                         })}
@@ -150,7 +150,7 @@ const Workspace = () => {
                 </div>
             </div>
             {/* Sentence Cards */}
-            {sentencesToShow.map(s => {
+            {sentencesToShow.map((s, n) => {
                 if (role === 'translator') {
                     return (
                     <TranslatorCard 
@@ -172,6 +172,8 @@ const Workspace = () => {
                             displayLang={displayLang}
                             lang={targetLang}
                             userContext={userContext}
+                            n={n}
+                            updateSentence={updateSentence}
                         />
                     )
                 } else {
