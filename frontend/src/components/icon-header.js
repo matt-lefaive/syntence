@@ -6,7 +6,7 @@ const IconHeader = ({ hasTranslation, hasRecording }) => {
             <div className={`tooltip ${hasRecording ? 'tooltip-clickable' : 'tooltip-normal'}`}>
                 {hasRecording ? '🔈' : '🔇'}
                 <span className='tooltip-text'>
-                    {hasRecording ? 'Recording\xA0Available\xA0(click\xA0to\xA0play)' : 'No\xA0Recording'}
+                    {hasRecording ? 'Recording\xA0Submitted' : 'No\xA0Recording'}
                 </span>
             </div>
             <div className='tooltip tooltip-normal'>

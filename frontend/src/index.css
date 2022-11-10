@@ -105,7 +105,6 @@ span.grow {
 
 .tooltip .tooltip-text {
   visibility: hidden;
-  
   background-color: gray;
   color: white;
   text-align: center;
@@ -124,7 +123,7 @@ span.grow {
 }
 
 .tooltip-clickable:hover {
-  cursor: pointer;
+  cursor: default;
 }
 
 .tooltip-normal:hover {

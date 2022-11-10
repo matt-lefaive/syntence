@@ -27,6 +27,7 @@ const Workspace = () => {
 
     // Set default role for user (first role in their roles array)
     useEffect(() => {
+        if (document.getElementById(''))
         setRole(allRoles[0])
     }, [allRoles])
 
@@ -152,18 +153,18 @@ const Workspace = () => {
                 <div style={{marginTop: '20px'}}><strong>{localized.ADDITIONAL_OPTIONS}</strong></div>
                 <div style={{display:'flex', marginTop:'10px'}}>
                     <div style={{flex: 1}}>
-                        <Checkbox 
-                            checked={showTranslatedSentences} 
-                            label={localized.SHOW_TRANSLATED_SENTENCES}
-                            onChange={e => setShowTranslatedSentences(!showTranslatedSentences)}
-                        />
-                    </div>
-                    <div style={{flex: 1}}>
                         <p style={{marginBottom: '5px'}}>{localized.SHOW_GROUP}:</p>
                         <HTMLSelect onChange={e => setGroup(e.target.value)}>
                             <option value=''>All</option>
                             {allGroups.map(g => <option key={g} value={g}>{g}</option>)}
                         </HTMLSelect>
+                    </div>
+                    <div style={{flex: 1}}>
+                        <Checkbox 
+                            checked={showTranslatedSentences} 
+                            label={localized.SHOW_TRANSLATED_SENTENCES}
+                            onChange={e => setShowTranslatedSentences(!showTranslatedSentences)}
+                        />
                     </div>
                 </div>
             </div>
