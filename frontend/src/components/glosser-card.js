@@ -141,76 +141,79 @@ const GlosserCard = ({ sentenceObj, lang, displayLang, userContext, n, updateSen
 
     return (
         <div className='workspace-card'>
+            <div className='workspace-card-header'>{localized.GROUP}: {sentenceObj.group}</div>
             {error && <Callout intent='danger'>{error}</Callout>}
             {notification && <Callout intent='success'>{notification}</Callout>}
-            <table>
-                <tbody>
-                    {/* Row 1: translation */}
-                    <tr>
-                        <td style={{textAlign:'right'}}><strong>{localized.TRANSLATION}:</strong></td>
-                        {words.map((word, i) => {
-                            return (
-                                <td key={word.text + `-${i}`}>
-                                    <em>{word.text}</em>
-                                </td>
-                            )
-                        })}
-                    </tr>
-                    {/* Row 2: glosses */}
-                    <tr>
-                        <td style={{textAlign:'right'}}><strong>{localized.GLOSS}:</strong></td>
-                        {words.map((word, i) => {
-                            return (
-                                <td 
-                                    id={`gloss-${word.text}-${i}-${n}`}
-                                    key={`gloss-${word.text}-${i}-${n}`} 
-                                    contentEditable 
-                                    style={{borderBottom:'1px solid gray'}}
-                                    suppressContentEditableWarning={true}
-                                >
-                                    {words[i].gloss}
-                                </td>
-                            );
-                        })}
-                    </tr>
-                    {/* Row 3: Gloss unlinkers */}
-                    <tr>
-                        <td></td>
-                        {words.map((word, i) => {
-                            if (word.gloss) {
+            <div className='workspace-card-body'>
+                <table>
+                    <tbody>
+                        {/* Row 1: translation */}
+                        <tr>
+                            <td style={{textAlign:'right'}}><strong>{localized.TRANSLATION}:</strong></td>
+                            {words.map((word, i) => {
                                 return (
-                                    <td
-                                        id={`unlink-${word.text}-${i}-${n}`}
-                                        key={`unlink-${word.text}-${i}-${n}`}
-                                        style={{textAlign: 'center'}}
-                                    >
-                                        <div 
-                                            className='gloss-unlinker'
-                                            onClick={() => handleUnlinkGlossClick(word, i)}
-                                        >
-                                            ⇤&nbsp;⇥
-                                        </div>
+                                    <td key={word.text + `-${i}-${n}`}>
+                                        <em>{word.text}</em>
                                     </td>
                                 )
-                            } else {
-                                return <td></td>
-                            }
-                        })}
-                    </tr>
-                    {/* Row 4: source sentence */}
-                    <tr>
-                        <td style={{textAlign:'right'}}><strong>{localized.SOURCE}:</strong></td>
-                        <td colSpan={words.length}>"{sentenceObj.text[displayLang]}"</td>
-                    </tr>
-                </tbody>
-            </table>
-            <Button 
-                style={{marginTop: '15px'}}
-                intent='primary'
-                fill
-                text={`${isSubmitting ? localized.SUBMITTING : localized.SUBMIT} ${displayLang === 'eng' ? localized.GLOSS : localized.GLOSS.toLowerCase()}`}
-                onClick={handleSubmitGlossOnClick}
-            />
+                            })}
+                        </tr>
+                        {/* Row 2: glosses */}
+                        <tr>
+                            <td style={{textAlign:'right'}}><strong>{localized.GLOSS}:</strong></td>
+                            {words.map((word, i) => {
+                                return (
+                                    <td 
+                                        id={`gloss-${word.text}-${i}-${n}`}
+                                        key={`gloss-${word.text}-${i}-${n}`} 
+                                        contentEditable 
+                                        style={{borderBottom:'1px solid gray'}}
+                                        suppressContentEditableWarning={true}
+                                    >
+                                        {words[i].gloss}
+                                    </td>
+                                );
+                            })}
+                        </tr>
+                        {/* Row 3: Gloss unlinkers */}
+                        <tr>
+                            <td></td>
+                            {words.map((word, i) => {
+                                if (word.gloss) {
+                                    return (
+                                        <td
+                                            id={`unlink-${word.text}-${i}-${n}`}
+                                            key={`unlink-${word.text}-${i}-${n}`}
+                                            style={{textAlign: 'center'}}
+                                        >
+                                            <div 
+                                                className='gloss-unlinker'
+                                                onClick={() => handleUnlinkGlossClick(word, i)}
+                                            >
+                                                ⇤&nbsp;⇥
+                                            </div>
+                                        </td>
+                                    )
+                                } else {
+                                    return <td key={`unlink-${word.text}-${i}-${n}`}></td>
+                                }
+                            })}
+                        </tr>
+                        {/* Row 4: source sentence */}
+                        <tr>
+                            <td style={{textAlign:'right'}}><strong>{localized.SOURCE}:</strong></td>
+                            <td colSpan={words.length}>"{sentenceObj.text[displayLang]}"</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <Button 
+                    style={{marginTop: '15px'}}
+                    intent='primary'
+                    fill
+                    text={`${isSubmitting ? localized.SUBMITTING : localized.SUBMIT} ${displayLang === 'eng' ? localized.GLOSS : localized.GLOSS.toLowerCase()}`}
+                    onClick={handleSubmitGlossOnClick}
+                />
+            </div>
         </div>
     )
 }

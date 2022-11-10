@@ -15,6 +15,8 @@ const Workspace = () => {
     const [localized, setLocalized] = useState(localization(displayLang));
     const [allRoles, setAllRoles] = useState(['']);
     const [role, setRole] = useState('');
+    const [allGroups, setAllGroups] = useState([]);
+    const [group, setGroup] = useState('');
 
     const [userContext, setUserContext] = useContext(UserContext);
 
@@ -28,6 +30,7 @@ const Workspace = () => {
         setRole(allRoles[0])
     }, [allRoles])
 
+    // Load user roles
     useEffect(() => {
         fetch(process.env.REACT_APP_API_ENDPOINT + 'user/roles', {
             method: 'GET',
@@ -45,6 +48,7 @@ const Workspace = () => {
         })
     }, [userContext.token]);
 
+    // Load user context
     const fetchUserDetails = useCallback(() => {
         fetch(process.env.REACT_APP_API_ENDPOINT + 'user/me', {
             method: 'GET',
@@ -84,9 +88,20 @@ const Workspace = () => {
 
     // Load all sentences
     useEffect(() => {
+        const getAllGroups = ss => {
+            const all = [];
+            for (const s of ss) {
+                if (!all.includes(s.group)) all.push(s.group);
+            }
+            return all;
+        }
+        
         axios
             .get('/sentence')
-            .then(allSentences => setSentences(allSentences.data))
+            .then(allSentences => {
+                setSentences(allSentences.data);
+                setAllGroups(getAllGroups(allSentences.data));
+            })
             .catch(err => {
                 console.error(err);
                 setSentences([]);
@@ -105,27 +120,21 @@ const Workspace = () => {
     } else if (role === 'glosser') {
         sentencesToShow = sentencesToShow.filter(sentence => isTranslated(sentence));
     }
+    if (group) {
+        sentencesToShow = sentencesToShow.filter(sentence => sentence.group === group);
+    }
 
     return (
         <div className='workspace'>
-            <div id='settings-card' className='workspace-card'>
+            <div id='settings-card' className='workspace-card workspace-card-body' style={{marginBottom:'20px'}}>
                 <p><strong>{localized.SETTINGS}</strong></p>
-                <div>
-                    <p>User Role:</p>
-                    <HTMLSelect onChange={e => setRole(e.target.value)}>
-                        {allRoles.map(r => {
-                            return (
-                                <option
-                                    key={r}
-                                    value={r}
-                                >
-                                    {localized[r.toUpperCase()]}
-                                </option>
-                            );
-                        })}
-                    </HTMLSelect>
-                </div>
-                <div style={{display:'flex', marginTop:'15px'}}>
+                <div style={{display:'flex', marginTop:'10px'}}>
+                    <div style={{flex: 1}}>
+                        <p style={{marginBottom: '5px'}}>User Role:</p>
+                        <HTMLSelect onChange={e => setRole(e.target.value)}>
+                            {allRoles.map(r => <option key={r} value={r}>{localized[r.toUpperCase()]}</option>)}
+                        </HTMLSelect>
+                    </div>
                     <div style={{flex: 1}}>
                         <p style={{marginBottom: '5px'}}>{localized.DISPLAY_LANGUAGE}</p>
                         <HTMLSelect onChange={e => setDisplayLang(e.target.value)}>
@@ -140,13 +149,22 @@ const Workspace = () => {
                         </HTMLSelect>
                     </div>
                 </div>
-                <div style={{marginTop:'15px'}}>
-                    <p>{localized.ADDITIONAL_OPTIONS}</p>
-                    <Checkbox 
-                        checked={showTranslatedSentences} 
-                        label={localized.SHOW_TRANSLATED_SENTENCES}
-                        onChange={e => setShowTranslatedSentences(!showTranslatedSentences)}
-                    />
+                <div style={{marginTop: '20px'}}><strong>{localized.ADDITIONAL_OPTIONS}</strong></div>
+                <div style={{display:'flex', marginTop:'10px'}}>
+                    <div style={{flex: 1}}>
+                        <Checkbox 
+                            checked={showTranslatedSentences} 
+                            label={localized.SHOW_TRANSLATED_SENTENCES}
+                            onChange={e => setShowTranslatedSentences(!showTranslatedSentences)}
+                        />
+                    </div>
+                    <div style={{flex: 1}}>
+                        <p style={{marginBottom: '5px'}}>{localized.SHOW_GROUP}:</p>
+                        <HTMLSelect onChange={e => setGroup(e.target.value)}>
+                            <option value=''>All</option>
+                            {allGroups.map(g => <option key={g} value={g}>{g}</option>)}
+                        </HTMLSelect>
+                    </div>
                 </div>
             </div>
             {/* Sentence Cards */}

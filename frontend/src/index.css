@@ -29,13 +29,28 @@ body {
   flex-direction: column;
 }
 
+/* ----- Workspace Styling ----- */
 .workspace-card {
   border: 1px solid lightgray;
   border-radius: 5px;
-  padding: 10px;
   box-shadow: 0px 0px 4px lightgray;
   margin-bottom: 10px;
   width: 600px;
+}
+
+.workspace-card-header {
+  padding: 0 10px;
+  color: white;
+  background-color: lightgray;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-bottom: 1px solid lightgray;
+  display: flex;
+  justify-content: space-between;
+}
+
+.workspace-card-body {
+  padding: 10px;
 }
 
 /* ----- Glosser Card Styles ----- */
@@ -80,4 +95,38 @@ span.grow {
 
 .direct-gloss {
   color: black;
+}
+
+/* ---- Tooltips ----- */
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  
+  background-color: gray;
+  color: white;
+  text-align: center;
+  padding: 5px;
+  border-radius: 6px;
+  position: absolute;
+  top: -20px;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltip-text {
+  transition-delay: 1s;
+  transition-property: visibility;
+  visibility: visible;
+}
+
+.tooltip-clickable:hover {
+  cursor: pointer;
+}
+
+.tooltip-normal:hover {
+  cursor: default;
 }

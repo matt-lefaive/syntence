@@ -6,6 +6,7 @@
  *          eng: "I like the cat",
  *          fre: "J'aime le chat"
  *      },
+ *      group: 'name',
  *      translations: {
  *          oji: 'Pooshiish'
  *      },
@@ -22,6 +23,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const Sentence = new Schema({
+    group: {
+        type: String,
+        default: ''
+    },
     text: {
         type: Object,
         default: {}

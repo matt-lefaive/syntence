@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, FormGroup, InputGroup, Callout } from '@blueprintjs/core';
+import IconHeader from './icon-header';
 
 import localization from '../Localization/localization';
 
@@ -111,70 +112,92 @@ const TranslatorCard = ({ sentence, isTranslated, lang, sentenceId, sentenceObje
         });
     }
 
+    const hasRecording = () => sentenceObject?.recordings?.[lang] != null;
+
     if (!isTranslated) {
         return (
             <div className='workspace-card'>
-                {error && <Callout intent='danger'>{error}</Callout>}
-                <form onSubmit={submitNewTranslationHandler}>
-                    <FormGroup label={sentence} labelFor='translation'>
-                        <InputGroup 
-                            id='translation'
-                            placeholder={localized.TRANSLATION}
-                            type='text'
-                            value={translation}
-                            onChange={e => setTranslation(e.target.value)}
-                        />
-                    </FormGroup>
-                    <label className="bp4-file-input .modifier">
-                        <input 
-                            type="file" 
-                            id='recording' 
-                            onChange={e => setFilename(e.target.value.replace('C:\\fakepath\\', ''))}
-                        />
-                        <span className="bp4-file-upload-input">{filename}</span>
-                    </label>
-                    <Button 
-                        style={{marginTop: '15px'}}
-                        intent='primary'
-                        fill
-                        type='submit'
-                        text={isSubmitting ? localized.SUBMITTING : localized.SUBMIT}
-                        disabled={isSubmitting ? true : undefined}
+                <div className='workspace-card-header'>
+                    <IconHeader 
+                        hasTranslation={isTranslated}
+                        hasRecording={hasRecording()}
                     />
-                </form>
+                    <div>
+                        {sentenceObject.group}
+                    </div>
+                </div>
+                <div className='workspace-card-body'>
+                    {error && <Callout intent='danger'>{error}</Callout>}
+                    <form onSubmit={submitNewTranslationHandler}>
+                        <FormGroup label={sentence} labelFor='translation'>
+                            <InputGroup 
+                                id='translation'
+                                placeholder={localized.TRANSLATION}
+                                type='text'
+                                value={translation}
+                                onChange={e => setTranslation(e.target.value)}
+                            />
+                        </FormGroup>
+                        <label className="bp4-file-input .modifier">
+                            <input 
+                                type="file" 
+                                id='recording' 
+                                onChange={e => setFilename(e.target.value.replace('C:\\fakepath\\', ''))}
+                            />
+                            <span className="bp4-file-upload-input">{filename}</span>
+                        </label>
+                        <Button 
+                            style={{marginTop: '15px'}}
+                            intent='primary'
+                            fill
+                            type='submit'
+                            text={isSubmitting ? localized.SUBMITTING : localized.SUBMIT}
+                            disabled={isSubmitting ? true : undefined}
+                        />
+                    </form>
+                </div>
             </div>
         )
     } else {
         return (
             <div className='workspace-card'>
-                {error && <Callout intent='danger'>{error}</Callout>}
-                <form onSubmit={submitNewTranslationHandler}>
-                    <FormGroup label={sentence} labelFor='translation'>
-                        <InputGroup 
-                            id='translation'
-                            placeholder={localized.UPDATED_TRANSLATION}
-                            type='text'
-                            value={translation}
-                            onChange={e => setTranslation(e.target.value)}
-                        />
-                    </FormGroup>
-                    <label className='bp4-file-input .modifer'>
-                        <input 
-                            type='file' 
-                            id='recording' 
-                            onChange={e => setFileReuploadText(e.target.value.replace('C:\\fakepath\\', ''))}
-                        />
-                        <span className='bp4-file-upload-input'>{fileReuploadText}</span>
-                    </label>
-                    <Button 
-                        style={{marginTop: '15px'}}
-                        intent='warning'
-                        fill
-                        type='submit'
-                        text={isSubmitting ? localized.UPDATING : localized.UPDATE}
-                        disabled={isSubmitting ? true : undefined}
+                <div className='workspace-card-header'>
+                    <IconHeader 
+                        hasTranslation={isTranslated}
+                        hasRecording={hasRecording()}
                     />
-                </form>
+                    <div>{sentenceObject.group}</div>
+                </div>
+                <div className='workspace-card-body'>
+                    {error && <Callout intent='danger'>{error}</Callout>}
+                    <form onSubmit={submitNewTranslationHandler}>
+                        <FormGroup label={sentence} labelFor='translation'>
+                            <InputGroup 
+                                id='translation'
+                                placeholder={localized.UPDATED_TRANSLATION}
+                                type='text'
+                                value={translation}
+                                onChange={e => setTranslation(e.target.value)}
+                            />
+                        </FormGroup>
+                        <label className='bp4-file-input .modifer'>
+                            <input 
+                                type='file'
+                                id='recording' 
+                                onChange={e => setFileReuploadText(e.target.value.replace('C:\\fakepath\\', ''))}
+                            />
+                            <span className='bp4-file-upload-input'>{fileReuploadText}</span>
+                        </label>
+                        <Button 
+                            style={{marginTop: '15px'}}
+                            intent='warning'
+                            fill
+                            type='submit'
+                            text={isSubmitting ? localized.UPDATING : localized.UPDATE}
+                            disabled={isSubmitting ? true : undefined}
+                        />
+                    </form>
+                </div>
             </div>
         )
     }

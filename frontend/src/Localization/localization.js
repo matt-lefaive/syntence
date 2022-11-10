@@ -30,6 +30,10 @@ const localization = lang => {
             eng: "Glosser",
             fre: "Noteur·se"
         },
+        GROUP: {
+            eng: 'Group',
+            fre: 'Groupe'
+        },
         OJIBWE: {
             eng: "Ojibwe",
             fre: "Ojibwé"
@@ -37,6 +41,10 @@ const localization = lang => {
         SETTINGS: {
             eng: "Settings:",
             fre: "Paramètres:"
+        },
+        SHOW_GROUP: {
+            eng: "Show Group",
+            fre: "Montrer groupe"
         },
         SHOW_TRANSLATED_SENTENCES: {
             eng: "Show translated sentences",
