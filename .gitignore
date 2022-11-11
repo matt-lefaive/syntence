@@ -212,3 +212,7 @@ backend/.dynamodb/
 backend/.tern-port
 
 backend/uploads
+
+
+# ROOT
+node_modules/

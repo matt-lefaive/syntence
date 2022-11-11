@@ -5,6 +5,7 @@ import TranslatorCard from './translator-card';
 import GlosserCard from './glosser-card';
 import AdminCard from './admin-card';
 import { HTMLSelect, Checkbox, Button } from '@blueprintjs/core';
+import _ from 'lodash';
 
 import localization from '../Localization/localization';
 
@@ -14,7 +15,7 @@ const Workspace = () => {
     const [sentences, setSentences] = useState([]);
     const [showTranslatedSentences, setShowTranslatedSentences] = useState(false);
     const [localized, setLocalized] = useState(localization(displayLang));
-    const [allRoles, setAllRoles] = useState(['']);
+    const [allRoles, setAllRoles] = useState([]);
     const [role, setRole] = useState('');
     const [allGroups, setAllGroups] = useState([]);
     const [group, setGroup] = useState('');
@@ -43,7 +44,9 @@ const Workspace = () => {
         }).then(async response => {
             if (response.ok) {
                 const data = await response.json();
-                setAllRoles(data);
+                if (!_.isEqual(_.sortBy(data), _.sortBy(allRoles))) {
+                    setAllRoles(data);
+                }
             }
         })
     }, [userContext.token]);
@@ -188,17 +191,21 @@ const Workspace = () => {
                         </HTMLSelect>
                     </div>
                     <div style={{flex: 1}}>
-                        <Checkbox 
+                        {role === 'translator' && <Checkbox 
                             checked={showTranslatedSentences} 
                             label={localized.SHOW_TRANSLATED_SENTENCES}
                             onChange={e => setShowTranslatedSentences(!showTranslatedSentences)}
-                        />
+                        />}
+                        {role !== 'translator' && <Checkbox
+                            checked={true}
+                            style={{visibility:'hidden'}}
+                        />}
                     </div>
                 </div>
             </div>
 
             {/* Admin Card */}
-            {role === 'admin' && <AdminCard />}
+            {role === 'admin' && <AdminCard displayLang={displayLang} />}
             
             {/* Sentence Cards */}
             {sentencesToShow.map((s, n) => {

@@ -35,8 +35,12 @@ const localization = lang => {
             fre: "Noteur·se"
         },
         GROUP: {
-            eng: 'Group',
-            fre: 'Groupe'
+            eng: "Group",
+            fre: "Groupe"
+        },
+        IMPORT_SENTENCES: {
+            eng: "Import Sentences",
+            fre: "Importer phrases"
         },
         OJIBWE: {
             eng: "Ojibwe",
