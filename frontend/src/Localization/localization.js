@@ -6,6 +6,10 @@ const localization = lang => {
             eng: "Additional Options:",
             fre: "Paramètres additionnels:"
         },
+        ADMIN: {
+            eng: 'Admin',
+            fre: 'Administrateur·rice'
+        },
         CHOOSE_RECORDING: {
             eng: "Choose recording...",
             fre: "Choisir enregistrement..."

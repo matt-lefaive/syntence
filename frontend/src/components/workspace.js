@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
 import axios from 'axios';
-import {UserContext} from '../context/UserContext';
+import { UserContext } from '../context/UserContext';
 import TranslatorCard from './translator-card';
 import GlosserCard from './glosser-card';
-import { HTMLSelect, Checkbox } from '@blueprintjs/core';
+import AdminCard from './admin-card';
+import { HTMLSelect, Checkbox, Button } from '@blueprintjs/core';
 
 import localization from '../Localization/localization';
 
@@ -27,7 +28,6 @@ const Workspace = () => {
 
     // Set default role for user (first role in their roles array)
     useEffect(() => {
-        if (document.getElementById(''))
         setRole(allRoles[0])
     }, [allRoles])
 
@@ -43,7 +43,6 @@ const Workspace = () => {
         }).then(async response => {
             if (response.ok) {
                 const data = await response.json();
-                console.log(data);
                 setAllRoles(data);
             }
         })
@@ -109,6 +108,21 @@ const Workspace = () => {
             })
     }, []);
 
+    const logoutHandler = () => {
+        fetch(process.env.REACT_APP_API_ENDPOINT + 'user/logout', {
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${userContext.token}`
+            }
+        }).then(async response => {
+            setUserContext(oldValues => {
+                return { ...oldValues, details: undefined, token: null }
+            })
+            window.localStorage.setItem('logout', Date.now())
+        })
+    }
+
     // Function passed to child component to send data back to parent
     const updateSentence = newSentenceObject => setSentences(sentences.map(s => s._id === newSentenceObject._id ? newSentenceObject : s));
    
@@ -127,6 +141,20 @@ const Workspace = () => {
 
     return (
         <div className='workspace'>
+            {/* Logout Button */}
+            <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '20px'}}>
+                <div></div>
+                <div style={{maxWidth: '100px'}}>
+                    <Button
+                        text='Logout'
+                        onClick={logoutHandler}
+                        fill
+                        intent='primary'
+                    />
+                </div>
+            </div>
+            
+            {/* Settings */}
             <div id='settings-card' className='workspace-card workspace-card-body' style={{marginBottom:'20px'}}>
                 <p><strong>{localized.SETTINGS}</strong></p>
                 <div style={{display:'flex', marginTop:'10px'}}>
@@ -168,20 +196,24 @@ const Workspace = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Admin Card */}
+            {role === 'admin' && <AdminCard />}
+            
             {/* Sentence Cards */}
             {sentencesToShow.map((s, n) => {
                 if (role === 'translator') {
                     return (
-                    <TranslatorCard 
-                        key={s._id} 
-                        sentence={s.text[displayLang]}
-                        isTranslated={isTranslated(s)}
-                        sentenceId={s._id}
-                        lang={targetLang}
-                        sentenceObject={s}
-                        updateSentence={updateSentence}
-                        displayLang={displayLang}   
-                    />
+                        <TranslatorCard 
+                            key={s._id} 
+                            sentence={s.text[displayLang]}
+                            isTranslated={isTranslated(s)}
+                            sentenceId={s._id}
+                            lang={targetLang}
+                            sentenceObject={s}
+                            updateSentence={updateSentence}
+                            displayLang={displayLang}   
+                        />
                     )
                 } else if (role === 'glosser') {
                     return (
