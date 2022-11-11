@@ -6,6 +6,7 @@ import Login from './components/login';
 import Register from './components/register';
 import Welcome from './components/welcome';
 import Workspace from './components/workspace';
+import Title from './components/title';
 
 const App = () => {
   const [currentTab, setCurrentTab] = useState('login');
@@ -54,13 +55,16 @@ const App = () => {
   }, [syncLogout]);
 
   return userContext.token === null ? (
-    <Card elevation='1' className='auth-card'>
-      <Tabs id='Tabs' onChange={setCurrentTab} selectedTabId={currentTab}>
-        <Tab id='login' title='Login' panel={<Login />} />
-        <Tab id='register' title='Register' panel={<Register />} />
-        <Tabs.Expander />
-      </Tabs>
-    </Card>
+    <>
+      <Title />
+      <Card elevation='1' className='auth-card'>
+        <Tabs id='Tabs' onChange={setCurrentTab} selectedTabId={currentTab}>
+          <Tab id='login' title='Login' panel={<Login />} />
+          <Tab id='register' title='Register' panel={<Register />} />
+          <Tabs.Expander />
+        </Tabs>
+      </Card>
+    </>
   ) : userContext.token ? (
     <Workspace />
   ) : (
