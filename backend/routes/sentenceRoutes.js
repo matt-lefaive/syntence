@@ -74,6 +74,7 @@ router.post('/recording/:id/:lang', async (req, res) => {
             // Update document
             const update = {[`recordings.${lang}`] : `./uploads/${lang}-${id}-${recording.name}`}
             Sentence.findByIdAndUpdate(id, update).exec((err, sentence) => {
+                sentence['recordings'][lang] = `./uploads/${lang}-${id}-${recording.name}`
                 res.send(sentence);
             })
         }

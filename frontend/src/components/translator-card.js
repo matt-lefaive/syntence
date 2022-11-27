@@ -84,7 +84,8 @@ const TranslatorCard = ({ sentence, isTranslated, lang, sentenceId, sentenceObje
                         return response.json();
                     }).then(data => {
                         // Update the sentenceObject that will be used to update state in parent with recording
-                        if (!newSentenceObject.recordings) newSentenceObject.recordings = {};
+                        if (!newSentenceObject.recordings) newSentenceObject.recordings = {[lang]: null};
+                        console.log(data);
                         newSentenceObject.recordings[lang] = data.recordings[lang];
                         updateSentence(newSentenceObject);
                         setIsSubmitting(false)
