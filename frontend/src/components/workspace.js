@@ -8,13 +8,16 @@ import { HTMLSelect, Checkbox, Button } from '@blueprintjs/core';
 import _ from 'lodash';
 
 import localization from '../Localization/localization';
+import ISO6392Codes from '../Localization/ISO-639-2';
 
 const Workspace = () => {
     const [displayLang, setDisplayLang] = useState('eng');
+    const [allTargetLangs, setAllTargetLangs] = useState([]);
     const [targetLang, setTargetLang] = useState('oji');
     const [sentences, setSentences] = useState([]);
     const [showTranslatedSentences, setShowTranslatedSentences] = useState(false);
     const [localized, setLocalized] = useState(localization(displayLang));
+    const [ISO6392, setISO6392] = useState(ISO6392Codes(displayLang));
     const [allRoles, setAllRoles] = useState([]);
     const [role, setRole] = useState('');
     const [allGroups, setAllGroups] = useState([]);
@@ -25,16 +28,22 @@ const Workspace = () => {
     // Localize strings on load
     useEffect(() => {
         setLocalized(localization(displayLang))
-    }, [displayLang, setLocalized]);
+        setISO6392(ISO6392Codes(displayLang))
+    }, [displayLang, setLocalized, setISO6392]);
 
     // Set default role for user (first role in their roles array)
     useEffect(() => {
-        setRole(allRoles[0])
+        setRole(allRoles[0]);
     }, [allRoles])
 
-    // Load user roles
+    // Set default target lang for user (first target lang in their target langs array)
     useEffect(() => {
-        fetch(process.env.REACT_APP_API_ENDPOINT + 'user/roles', {
+        setTargetLang(allTargetLangs[0]);
+    }, [allTargetLangs]);
+
+    // Load user roles and target langs
+    useEffect(() => {
+        fetch(process.env.REACT_APP_API_ENDPOINT + 'user/me', {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -44,8 +53,16 @@ const Workspace = () => {
         }).then(async response => {
             if (response.ok) {
                 const data = await response.json();
-                if (!_.isEqual(_.sortBy(data), _.sortBy(allRoles))) {
-                    setAllRoles(data);
+
+                const pulledRoles = data.roles;
+                const pulledTargets = data.targetLangs;
+
+                if (!_.isEqual(_.sortBy(pulledRoles), _.sortBy(allRoles))) {
+                    setAllRoles(pulledRoles);
+                }
+
+                if (!_.isEqual(_.sortBy(pulledTargets), _.sortBy(allTargetLangs))) {
+                    setAllTargetLangs(pulledTargets);
                 }
             }
         })
@@ -177,7 +194,7 @@ const Workspace = () => {
                     <div style={{flex: 1}}>
                         <p style={{marginBottom: '5px'}}>{localized.TARGET_LANGUAGE}</p>
                         <HTMLSelect onChange={e => setTargetLang(e.target.value)}>
-                            <option value='oji'>{localized.OJIBWE}</option>
+                            {allTargetLangs.map(t => <option key={t} value={t}>{ISO6392[t.toUpperCase()]}</option>)}
                         </HTMLSelect>
                     </div>
                 </div>

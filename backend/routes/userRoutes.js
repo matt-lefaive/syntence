@@ -13,8 +13,6 @@ const {
 
 router.get('/me', verifyUser, (req, res, next) => res.send(req.user));
 
-router.get('/roles', verifyUser, (req, res, next) => res.send(req.user.roles));
-
 router.post('/signup', (req, res, next) => {
     // Verify that the first name is not empty
     if (!req.body.firstName) {
