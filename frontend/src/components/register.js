@@ -89,7 +89,7 @@ const Register = () => {
                 </FormGroup>
                 <Button 
                     intent='primary' 
-                    disable={isSubmitting ? true : undefined}
+                    disabled={isSubmitting ? true : undefined}
                     text={`${isSubmitting ? 'Registering' : 'Register'}`} 
                     fill 
                     type='submit' 

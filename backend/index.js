@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const fileUpload = require('express-fileupload');
 const _ = require('lodash');
+const path = require('path');
 
 require('dotenv').config();
 require('./utils/connectdb');
@@ -26,6 +27,7 @@ app.use(fileUpload({
 
 app.use(bodyParser.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(express.static('build'));
 
 // Add the client URL to the CORS policy
 const whitelist = process.env.WHITELISTED_DOMAINS
@@ -52,7 +54,7 @@ app.use('/sentence', sentenceRouter);
 app.use('/word', wordRouter);
 
 app.get('/', (req, res) => {
-    res.send({status: 'success'})
+    res.send({status: 'success'});
 });
 
 

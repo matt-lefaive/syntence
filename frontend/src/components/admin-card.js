@@ -17,6 +17,7 @@ const AdminCard = ({ displayLang }) => {
         setColumns({});
 
         if (e.target.files) {
+            // Read in CSV file
             Papa.parse(e.target.files[0], {
                 header: true,
                 skipEmptyLines: true,
@@ -41,16 +42,45 @@ const AdminCard = ({ displayLang }) => {
         }
     }
 
+    const handleOnImportClick = e => {
+        // Turn the columns into sentence objects to upload
+        setError('');
+        if (!_.isEmpty(columns)) {
+            const sentences = [];
+            const headers = Object.keys(columns);
+            for (let i = 0; i < columns['group'].length; i++) {
+                const newSentence = {group: columns['group'][i], text: {}};
+                headers.forEach((h, j) => {
+                    if (j > 0) newSentence.text[h] = columns[h][i]
+                })
+                sentences.push(newSentence);
+            }
+            
+            fetch(process.env.REACT_APP_API_ENDPOINT + `sentence/multi/new`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({sentences: sentences})
+            }).then(async response => {
+                if (!response.ok) {
+                    setError('Error importing sentences.');
+                } else {
+                    window.location.reload();
+                }
+            })
+        }
+    }
+
     return (
         <div className='workspace-card'>
             <div className='workspace-card-body'>
                 {error && <Callout intent='danger'>{error}</Callout>}
             
+                <div style={{marginBottom: '5px'}}>
+                    {`${localized.IMPORT_SENTENCES} (.csv):`}
+                </div>
                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                     <div>
-                        <div style={{marginBottom: '5px'}}>
-                            {`${localized.IMPORT_SENTENCES} (.csv):`}
-                        </div>
                         <form>
                             <label className="bp4-file-input .modifier">
                                 <input 
@@ -65,12 +95,12 @@ const AdminCard = ({ displayLang }) => {
                         </form>
                     </div>
                     <div>
-                        <div style={{marginBottom: '5px'}}>&nbsp;</div>
                         <Button 
                             intent='primary'
                             fill
                             text={localized.IMPORT_SENTENCES}
                             disabled={_.isEmpty(columns)}
+                            onClick={handleOnImportClick}
                         />
                     </div>
                 </div>

@@ -81,6 +81,20 @@ router.post('/recording/:id/:lang', async (req, res) => {
     } catch (err) {
 
     }
+});
+
+/**
+ * Submit new sentences to database to be translated
+ */
+router.post('/multi/new', (req, res) => {
+    const sentences = req.body.sentences;
+    
+    if (sentences) {
+        Sentence.create(sentences, (err, result) => {
+            res.send('done');
+        });
+    }
+
 })
 
 module.exports = router;

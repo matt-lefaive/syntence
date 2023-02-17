@@ -94,6 +94,10 @@ const localization = lang => {
             eng: "Updating",
             fre: "En actualisant"
         },
+        UPLOAD: {
+            eng: "Upload",
+            fre: "Télécharger"
+        }
     }
 
     Object.keys(text).forEach(translation => text[translation] = text[translation][lang])

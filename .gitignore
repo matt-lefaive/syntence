@@ -216,3 +216,10 @@ backend/uploads
 
 # ROOT
 node_modules/
+
+# Keys
+*.pem
+
+# Misc
+.DS_Store
+backend/build
