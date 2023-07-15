@@ -17,6 +17,26 @@ const ISO6392Codes = lang => {
         UMU: {
             eng: 'Munsee',
             fre: 'Munsee'
+        },
+        NYN: {
+            eng: 'Kinyankole',
+            fre: 'Kinyankole'
+        },
+        LUG: {
+            eng: 'Luganda',
+            fre: 'Luganda'
+        },
+        KIN: {
+            eng: 'Kinyarwanda',
+            fre: 'Kinyarwanda'
+        },
+        RUN: {
+            eng: 'Kirundi',
+            fre: 'Kirundi'
+        },
+        UNM: {
+            eng: 'Unami',
+            fre: 'Unami'
         }
     }
 

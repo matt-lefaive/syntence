@@ -4,7 +4,6 @@ import { UserContext } from './context/UserContext';
 import Loader from './components/loader';
 import Login from './components/login';
 import Register from './components/register';
-import Welcome from './components/welcome';
 import Workspace from './components/workspace';
 import Title from './components/title';
 
@@ -13,7 +12,7 @@ const App = () => {
   const [userContext, setUserContext] = useContext(UserContext);
 
   const verifyUser = useCallback(() => {
-    fetch('/user/refreshToken', {
+    fetch(process.env.REACT_APP_API_ENDPOINT + 'user/refreshToken', {
       method: 'POST',
       credentials: 'include',
       headers: {'Content-Type': 'application/json'}
@@ -28,8 +27,8 @@ const App = () => {
           return { ...oldValues, token: null}
         })
       }
-      // call refreshToken every 5 minutes to renew the authentication token
-      setTimeout(verifyUser, 5 * 60 * 1000);
+      // call refreshToken every 30 minutes to renew the authentication token
+      setTimeout(verifyUser, 30 * 60 * 1000);
     })
   }, [setUserContext]);
 

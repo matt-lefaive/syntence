@@ -117,7 +117,7 @@ const Workspace = () => {
         }
         
         axios
-            .get('/sentence')
+            .get(process.env.REACT_APP_API_ENDPOINT + 'sentence')
             .then(allSentences => {
                 setSentences(allSentences.data);
                 setAllGroups(getAllGroups(allSentences.data));

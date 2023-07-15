@@ -4,7 +4,7 @@
 
 body {
   margin: 1em auto;
-  max-width: 600px;
+  max-width: 700px;
 }
 
 .auth-form {
@@ -12,7 +12,7 @@ body {
 }
 
 .auth-card {
-  max-width: 600px;
+  max-width: 700px;
 }
 
 .loader {
@@ -35,7 +35,7 @@ body {
   border-radius: 5px;
   box-shadow: 0px 0px 4px lightgray;
   margin-bottom: 10px;
-  width: 600px;
+  width: 700px;
 }
 
 .workspace-card-header {
@@ -140,4 +140,19 @@ table.csv-table > tbody > tr > td {
 
 .tooltip-normal:hover {
   cursor: default;
+}
+
+/* Voice Recorder Styles */
+.btn-upload-audio-file {
+  border-radius: 50%;
+  border: none;
+  width: 44px;
+  height: 44px;
+  margin: 0 8px;
+  background-color: #E6E6E6;
+  box-shadow: 0px 1px 5px #8F8F8F;
+}
+
+.btn-upload-audio-file:hover {
+  cursor: pointer;
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, FormGroup, InputGroup, Callout } from '@blueprintjs/core';
 import IconHeader from './icon-header';
+import VoiceRecorder from './voice-recorder';
 
 import localization from '../Localization/localization';
 
@@ -139,14 +140,23 @@ const TranslatorCard = ({ sentence, isTranslated, lang, sentenceId, sentenceObje
                                 onChange={e => setTranslation(e.target.value)}
                             />
                         </FormGroup>
-                        <label className="bp4-file-input .modifier">
-                            <input 
-                                type="file" 
-                                id='recording' 
-                                onChange={e => setFilename(e.target.value.replace('C:\\fakepath\\', ''))}
-                            />
-                            <span className="bp4-file-upload-input">{filename}</span>
-                        </label>
+                        
+                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                            <label className="bp4-file-input .modifier">
+                                <input 
+                                    type="file" 
+                                    id='recording' 
+                                    onChange={e => setFilename(e.target.value.replace('C:\\fakepath\\', ''))}
+                                    className={`file-input-${lang}-${sentenceId}`}
+                                />
+                                <span id={`filename-${lang}-${sentenceId}`} className="bp4-file-upload-input">{filename}</span>
+                            </label>
+                            <div id={`audio-div-${lang}-${sentenceId}`}></div>
+                            <VoiceRecorder lang={lang} sentenceId={sentenceId}/>
+                        </div>
+                        
+                        
+                        
                         <Button 
                             style={{marginTop: '15px'}}
                             intent='primary'
