@@ -65,7 +65,7 @@ router.post('/recording/:id/:lang', async (req, res) => {
                 message: 'No recording uploaded'
             })
         } else {
-            // Use name of input field to retrieve uplaoded file
+            // Use name of input field to retrieve uploaded file
             const recording = req.files.recording;
 
             // Place the file in the uploads directory

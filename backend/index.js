@@ -27,7 +27,9 @@ app.use(fileUpload({
 
 app.use(bodyParser.json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(express.static('uploads'));
 app.use(express.static('build'));
+
 
 // Add the client URL to the CORS policy
 const whitelist = process.env.WHITELISTED_DOMAINS

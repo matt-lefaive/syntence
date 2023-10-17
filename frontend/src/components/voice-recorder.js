@@ -26,7 +26,7 @@ const VoiceRecorder = ({ lang, sentenceId }) => {
             const fileInput = document.querySelector(`.file-input-${lang}-${sentenceId}`);
             if (fileInput) {
                 fileInput.files = container.files;
-                document.getElementById(`filename-${lang}-${sentenceId}`).innerHTML = `${lang}-${sentenceId}.webm`;
+                document.getElementById(`filename-${lang}-${sentenceId}`).innerHTML = `${lang}-${sentenceId}-.webm`;
             }
         }
     }

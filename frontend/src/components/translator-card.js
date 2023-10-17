@@ -191,14 +191,28 @@ const TranslatorCard = ({ sentence, isTranslated, lang, sentenceId, sentenceObje
                                 onChange={e => setTranslation(e.target.value)}
                             />
                         </FormGroup>
-                        <label className='bp4-file-input .modifer'>
-                            <input 
-                                type='file'
-                                id='recording' 
-                                onChange={e => setFileReuploadText(e.target.value.replace('C:\\fakepath\\', ''))}
-                            />
-                            <span className='bp4-file-upload-input'>{fileReuploadText}</span>
-                        </label>
+                        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                            <label className="bp4-file-input .modifier">
+                                <input 
+                                    type="file" 
+                                    id='recording' 
+                                    onChange={e => setFilename(e.target.value.replace('C:\\fakepath\\', ''))}
+                                    className={`file-input-${lang}-${sentenceId}`}
+                                />
+                                <span id={`filename-${lang}-${sentenceId}`} className="bp4-file-upload-input">{filename}</span>
+                            </label>
+                            <div id={`audio-div-${lang}-${sentenceId}`}></div>
+                            <VoiceRecorder lang={lang} sentenceId={sentenceId}/>
+                        </div>
+                        <div>
+                            {hasRecording() && <>
+                                <p>Current Recording:</p>
+                                <audio controls>
+                                    <source src={sentenceObject.recordings?.[lang].replace('uploads/', '')}/>
+                                </audio>
+                                <p>Audio not loading? Click here: <a href={'https://syntence.ca/' + sentenceObject.recordings?.[lang].replace('uploads/', '')}>{sentenceObject.recordings?.[lang].replace('./uploads/', '/')}</a></p>
+                            </>}
+                        </div>
                         <Button 
                             style={{marginTop: '15px'}}
                             intent='warning'
